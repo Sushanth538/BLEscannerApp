@@ -49,7 +49,8 @@ fun DeviceScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(text = "Device Name: ${scanResult.device.name ?: "Unnamed"}")
+            val deviceName = scanResult.device.name ?: scanResult.scanRecord?.deviceName ?: "Unnamed"
+            Text(text = "Device Name: $deviceName")
             Text(text = "MAC Address: ${scanResult.device.address}")
             Text(text = "RSSI: ${scanResult.rssi}")
 

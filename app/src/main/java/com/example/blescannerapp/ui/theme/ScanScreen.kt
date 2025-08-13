@@ -151,7 +151,7 @@ fun ScanScreen(
 
         LazyColumn {
             items(devices) { result ->
-                val name = result.device.name ?: "Unnamed"
+                val name = result.device.name ?: result.scanRecord?.deviceName ?: "Unnamed"
                 val address = result.device.address
 
                 Card(

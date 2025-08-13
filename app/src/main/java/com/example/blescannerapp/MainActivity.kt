@@ -12,6 +12,7 @@ import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import com.example.blescannerapp.ui.DeviceScreen
 import com.example.blescannerapp.ui.ScanScreen
+import com.example.blescannerapp.ui.SplashScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -24,9 +25,7 @@ class MainActivity : ComponentActivity() {
         // Launch the Jetpack Compose UI
         setContent {
             BLEScannerApp(
-                onDeviceSelected = {
-                    selectedDevice = it
-                },
+                onDeviceSelected = { selectedDevice = it },
                 getSelectedDevice = { selectedDevice }
             )
         }
@@ -40,8 +39,18 @@ fun BLEScannerApp(
 ) {
     val navController = rememberNavController()
 
-    NavHost(navController, startDestination = "scan") {
+    NavHost(navController, startDestination = "splash") {
 
+        // Splash Screen
+        composable("splash") {
+            SplashScreen {
+                navController.navigate("scan") {
+                    popUpTo("splash") { inclusive = true } // Remove splash from backstack
+                }
+            }
+        }
+
+        // Scan Screen
         composable("scan") {
             ScanScreen(
                 onDeviceSelected = { result ->
@@ -51,6 +60,7 @@ fun BLEScannerApp(
             )
         }
 
+        // Device Screen
         composable(
             route = "device/{deviceAddress}",
             arguments = listOf(navArgument("deviceAddress") { type = NavType.StringType })

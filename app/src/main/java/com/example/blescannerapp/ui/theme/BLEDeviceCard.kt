@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 //
 //onClick: Lambda function that gets called when the card is tapped. You pass this from the parent ScanScreen.
 fun BLEDeviceCard(result: ScanResult, onClick: (ScanResult) -> Unit) {
-    val name = result.device.name ?: "Unnamed"
+    val name = result.device.name ?: result.scanRecord?.deviceName ?: "Unnamed"
     val address = result.device.address
     val rssi = result.rssi
 
